@@ -10,6 +10,7 @@ COMMAND_TEMPERATURE = 'temperature'
 COMMAND_ETHERNET = 'ethernet'
 COMMAND_EVENTLOG = 'eventlog'
 COMMAND_ARMSTATE = 'armstate'
+COMMAND_LOCK_DEVICES = 'lock_devices'
 COMMAND_LOCK = 'lock'
 
 
@@ -58,6 +59,11 @@ def main():
     commandsparser.add_parser(
         COMMAND_LOCK,
         help='Get lock status')
+
+    commandsparser.add_parser(
+        COMMAND_LOCK_DEVICES,
+        help='Get lock devices'
+        )
 
     # Set command
     set_parser = commandsparser.add_parser(
@@ -127,8 +133,10 @@ def main():
             print_result(session.get_temperature(args.device_label))
         if args.command == COMMAND_ETHERNET:
             print_result(session.get_ethernet_status())
-        if args.command == COMMAND_LOCK:
+        if args.command == COMMAND_LOCK_DEVICES:
             print_result(session.get_lock_devices())
+        if args.command == COMMAND_LOCK:
+            print_result(session.get_lock_status())
         if args.command == COMMAND_EVENTLOG:
             print_result(
                 session.get_history(

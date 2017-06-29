@@ -73,7 +73,6 @@ class Session(object):
         self._username = username
         self._password = password
         self._panel = panel
-        self._vid = None
 
     def get_arm_state(self):
         """ Get arm state """
@@ -184,25 +183,6 @@ class Session(object):
             row['time'] = fix_date_short(row['time'])
         return res
 
-    def get_climate(self, device_label):
-        """ Get climate history
-        Args:
-            device_label: device label of climate device
-        """
-        response = None
-        try:
-            response = requests.get(
-                urls.climate(self._giid),
-                headers={
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Cookie': 'vid={}'.format(self._vid)},
-                params={
-                    "deviceLabel": device_label})
-        except requests.exceptions.RequestException as ex:
-            raise RequestError(ex)
-        _validate_response(response)
-        return json.loads(response.text)
-
     def get_lock_state(self):
         """ Get current lock status """
         response = None
@@ -239,24 +219,6 @@ class Session(object):
         _validate_response(response)
         return json.loads(response.text)
 
-    def get_lock_state_transaction(self, transaction_id):
-        """ Get lock state transaction status
-
-        Args:
-            transaction_id: Transaction ID received from set_lock_state
-        """
-        response = None
-        try:
-            response = requests.get(
-                urls.get_lockstate_transaction(self._giid, transaction_id),
-                headers={
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Cookie': 'vid={}'.format(self._vid)})
-        except requests.exceptions.RequestException as ex:
-            raise RequestError(ex)
-        _validate_response(response)
-        return json.loads(response.text)
-
     def get_lock_config(self, device_label):
         """ Get lock configuration
 
@@ -274,35 +236,6 @@ class Session(object):
             raise RequestError(ex)
         _validate_response(response)
         return json.loads(response.text)
-
-    def set_lock_config(self, device_label, volume=None, voice_level=None,
-                        auto_lock_enabled=None):
-        """ Set lock configuration
-
-        Args:
-            device_label (str): device label of lock
-            volume (str): 'SILENCE', 'LOW' or 'HIGH'
-            voice_level (str): 'ESSENTIAL' or 'NORMAL'
-            auto_lock_enabled (boolean): auto lock enabled
-        """
-        response = None
-        data = {}
-        if volume:
-            data['volume'] = volume
-        if voice_level:
-            data['voiceLevel'] = voice_level
-        if auto_lock_enabled is not None:
-            data['autoLockEnabled'] = auto_lock_enabled
-        try:
-            response = requests.put(
-                urls.lockconfig(self._giid, device_label),
-                headers={
-                    'Content-Type': 'application/json',
-                    'Cookie': 'vid={}'.format(self._vid)},
-                data=json.dumps(data))
-        except requests.exceptions.RequestException as ex:
-            raise RequestError(ex)
-        _validate_response(response)
 
     def logout(self):
         """ Logout and remove vid """
