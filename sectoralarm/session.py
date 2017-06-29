@@ -87,7 +87,7 @@ class Session(object):
         res['timeex'] = fix_date_short(res['timeex'])
         return res
 
-    def get_temperature(self, device_label):
+    def get_temperature(self, device_label=None):
         """ Get temperatures """
         response = None
         try:

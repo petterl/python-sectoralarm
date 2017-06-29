@@ -62,8 +62,7 @@ def main():
 
     commandsparser.add_parser(
         COMMAND_LOCK_DEVICES,
-        help='Get lock devices'
-        )
+        help='Get lock devices')
 
     # Set command
     set_parser = commandsparser.add_parser(
