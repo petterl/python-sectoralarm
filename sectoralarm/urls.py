@@ -99,6 +99,32 @@ def get_doorlock_status(username, password, panel):
         panel=panel)
 
 
+def lock_doorlock(username, password, panel, serialNo, code):
+    return (
+        '{base_url}/lockDoorlock?username={username}'
+        '&password={password}&panelId={panel}'
+        '&serial={serialNo}&userCode={code}').format(
+        base_url=BASE_URL,
+        username=username,
+        password=password,
+        panel=panel,
+        serialNo=serialNo,
+        code=code)
+
+
+def unlock_doorlock(username, password, panel, serialNo, code):
+    return (
+        '{base_url}/unlockDoorlock?username={username}'
+        '&password={password}&panelId={panel}'
+        '&serial={serialNo}&userCode={code}').format(
+        base_url=BASE_URL,
+        username=username,
+        password=password,
+        panel=panel,
+        serialNo=serialNo,
+        code=code)
+
+
 def get_temperature(username, password, panel):
     return (
         '{base_url}/GetTemperatureComponents?username={username}'

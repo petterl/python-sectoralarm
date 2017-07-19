@@ -31,6 +31,7 @@ positional arguments:
 
 commands
     armstate            Get arm state
+    lock                Get lock status
     set                 Set status of a device
     temperature         Get climate history
     eventlog            Get event log

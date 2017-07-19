@@ -146,10 +146,14 @@ def main():
                     args.code,
                     args.new_status))
             if args.device == 'lock':
-                print_result(session.set_lock_state(
-                    args.code,
-                    args.serial_number,
-                    args.new_status))
+                if args.new_status == 'lock':
+                    print_result(session.lock_doorlock(
+                        args.serial_number,
+                        args.code))
+                if args.new_status == 'unlock':
+                    print_result(session.unlock_doorlock(
+                        args.serial_number,
+                        args.code))
     except sectoralarm.session.ResponseError as ex:
         print(ex.text)
 

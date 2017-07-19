@@ -183,37 +183,41 @@ class Session(object):
             row['time'] = fix_date_short(row['time'])
         return res
 
-    def get_lock_state(self):
-        """ Get current lock status """
+    def lock_doorlock(self, serialNo, code):
+        """ Lock
+
+        Args:
+            serialNo (str): Device serialNo of lock
+            code (str): Lock code
+        """
         response = None
         try:
-            response = requests.get(
-                urls.get_lockstate(self._giid),
-                headers={
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Cookie': 'vid={}'.format(self._vid)})
+            response = requests.get(urls.lock_doorlock(
+                self._username,
+                self._password,
+                self._panel,
+                serialNo,
+                code))
         except requests.exceptions.RequestException as ex:
             raise RequestError(ex)
         _validate_response(response)
         return json.loads(response.text)
 
-    def set_lock_state(self, code, device_label, state):
-        """ Lock or unlock
+    def unlock_doorlock(self, serialNo, code):
+        """ Lock
 
         Args:
+            serialNo (str): Device serialNo of lock
             code (str): Lock code
-            device_label (str): device label of lock
-            state (str): 'lock' or 'unlock'
         """
         response = None
         try:
-            response = requests.put(
-                urls.set_lockstate(self._giid, device_label, state),
-                headers={
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Content-Type': 'application/json',
-                    'Cookie': 'vid={}'.format(self._vid)},
-                data=json.dumps({"code": str(code)}))
+            response = requests.get(urls.unlock_doorlock(
+                self._username,
+                self._password,
+                self._panel,
+                serialNo,
+                code))
         except requests.exceptions.RequestException as ex:
             raise RequestError(ex)
         _validate_response(response)

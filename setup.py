@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='sectoralarm',
-    version='1.0.0',
+    version='1.1.0',
     description='Read and change status of sector alarm devices through api.',
     long_description='A module for reading and changing status of ' +
     'sectoralarm devices through App API. Compatible ' +
