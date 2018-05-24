@@ -50,7 +50,8 @@ def disarm(username, password, panel, code):
         password=password,
         panel=panel,
         code=code)
-    
+
+
 def arm(username, password, panel, code):
     return (
         '{base_url}/arm?username={username}&password={password}'
@@ -61,6 +62,7 @@ def arm(username, password, panel, code):
         panel=panel,
         code=code)
 
+
 def partialarm(username, password, panel, code):
     return (
         '{base_url}/partialarm?username={username}&password={password}'
@@ -70,6 +72,7 @@ def partialarm(username, password, panel, code):
         password=password,
         panel=panel,
         code=code)
+
 
 def disarm_and_unlock(username, password, panel, code):
     return (

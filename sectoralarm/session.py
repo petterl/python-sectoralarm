@@ -153,8 +153,7 @@ class Session(object):
         """
         response = None
         try:
-            response = requests.get(
-                urls.disarm(
+            response = requests.get(urls.disarm(
                 self._username,
                 self._password,
                 self._panel,
@@ -163,7 +162,7 @@ class Session(object):
             raise RequestError(ex)
         _validate_response(response)
         return json.loads(response.text)
-    
+
     def arm(self, code):
         """ Arm alarm
 
@@ -172,8 +171,7 @@ class Session(object):
         """
         response = None
         try:
-            response = requests.get(
-                urls.arm(
+            response = requests.get(urls.arm(
                 self._username,
                 self._password,
                 self._panel,
@@ -191,8 +189,7 @@ class Session(object):
         """
         response = None
         try:
-            response = requests.get(
-                urls.partialarm(
+            response = requests.get(urls.partialarm(
                 self._username,
                 self._password,
                 self._panel,
@@ -201,7 +198,6 @@ class Session(object):
             raise RequestError(ex)
         _validate_response(response)
         return json.loads(response.text)
-
 
     def get_history(self, offset=0):
         """ Get recent events

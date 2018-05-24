@@ -143,14 +143,11 @@ def main():
         if args.command == COMMAND_SET:
             if args.device == 'alarm':
                 if args.new_status == 'DISARMED':
-                    print_result(session.disarm(
-                    args.code))
+                    print_result(session.disarm(args.code))
                 if args.new_status == 'ARMED_HOME':
-                    print_result(session.partialarm(
-                    args.code))
+                    print_result(session.partialarm(args.code))
                 if args.new_status == 'ARMED_AWAY':
-                    print_result(session.arm(
-                    args.code))
+                    print_result(session.arm(args.code))
             if args.device == 'lock':
                 if args.new_status == 'lock':
                     print_result(session.lock_doorlock(
