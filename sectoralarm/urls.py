@@ -52,6 +52,28 @@ def disarm(username, password, panel, code):
         code=code)
 
 
+def arm(username, password, panel, code):
+    return (
+        '{base_url}/arm?username={username}&password={password}'
+        '&panel={panel}&armCode={code}').format(
+        base_url=BASE_URL,
+        username=username,
+        password=password,
+        panel=panel,
+        code=code)
+
+
+def partialarm(username, password, panel, code):
+    return (
+        '{base_url}/partialarm?username={username}&password={password}'
+        '&panel={panel}&armCode={code}').format(
+        base_url=BASE_URL,
+        username=username,
+        password=password,
+        panel=panel,
+        code=code)
+
+
 def disarm_and_unlock(username, password, panel, code):
     return (
         '{base_url}/ArmAndLock?username={username}&password={password}'

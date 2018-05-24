@@ -145,22 +145,55 @@ class Session(object):
         res = json.loads(response.text)
         return res
 
-    def set_arm_state(self, code, state):
+    def disarm(self, code):
+        """ Disarm alarm
+
+        Args:
+            code (str): Personal alarm code (four or six digits)
+        """
+        response = None
+        try:
+            response = requests.get(urls.disarm(
+                self._username,
+                self._password,
+                self._panel,
+                code))
+        except requests.exceptions.RequestException as ex:
+            raise RequestError(ex)
+        _validate_response(response)
+        return json.loads(response.text)
+
+    def arm(self, code):
+        """ Arm alarm
+
+        Args:
+            code (str): Personal alarm code (four or six digits)
+        """
+        response = None
+        try:
+            response = requests.get(urls.arm(
+                self._username,
+                self._password,
+                self._panel,
+                code))
+        except requests.exceptions.RequestException as ex:
+            raise RequestError(ex)
+        _validate_response(response)
+        return json.loads(response.text)
+
+    def partialarm(self, code):
         """ Set alarm state
 
         Args:
             code (str): Personal alarm code (four or six digits)
-            state (str): 'ARMED_HOME', 'ARMED_AWAY' or 'DISARMED'
         """
         response = None
         try:
-            response = requests.put(
-                urls.set_armstate(self._giid),
-                headers={
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Content-Type': 'application/json',
-                    'Cookie': 'vid={}'.format(self._vid)},
-                data=json.dumps({"code": str(code), "state": state}))
+            response = requests.get(urls.partialarm(
+                self._username,
+                self._password,
+                self._panel,
+                code))
         except requests.exceptions.RequestException as ex:
             raise RequestError(ex)
         _validate_response(response)
